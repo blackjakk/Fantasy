@@ -50,7 +50,12 @@ Ordered within sections. (S) = safety-critical when touched.
 ## V2+
 
 - Dynasty (persistent rosters/portfolios), rookie IPOs, global cross-league player market.
-- Shared league treasury + governance + top-scorer treasury parlay.
+- **Dynasty Treasury** — designed and simulated (see docs/DYNASTY.md and
+  docs/generated/dynasty-results.md): members lock recurring contributions in a shared
+  20-year fund; fantasy results earn voting power (voice, never ownership) that steers
+  allocation. Next step is Phase 1: the simulated game mode on real multi-season leagues,
+  then the zero-custody "league investment club" toolkit (Phase 2).
+- Shared league treasury + governance + top-scorer treasury parlay (weekly-scale variant).
 - Prediction markets — only under the same payout-cap regime as the sportsbook.
 - Order types / hybrid AMM+order-book player markets.
 

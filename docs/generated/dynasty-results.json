@@ -1,0 +1,317 @@
+{
+  "trials": 300,
+  "years": 20,
+  "nMembers": 12,
+  "report": [
+    {
+      "experiment": "decay",
+      "question": "Do trophies fade? (base 1, cap 3x, trophy earn, weighted-average votes)",
+      "results": [
+        {
+          "label": "no decay (trophies forever)",
+          "top1Share": 0.09272288897535198,
+          "top3Share": 0.27816866692605524,
+          "minShare": 0.042162889113921416,
+          "skillPowerCorr": 0.3977300879381297,
+          "luckKingRate": 0.73,
+          "medianTerminalUsd": 401970,
+          "p10TerminalUsd": 229989,
+          "p90TerminalUsd": 761443,
+          "meanMaxDrawdown": 0.15081649699150382,
+          "meanCryptoWeight": 0.20659395987266774,
+          "beatIndexRate": 0.43333333333333335
+        },
+        {
+          "label": "decay 0.9/yr",
+          "top1Share": 0.11065942248829126,
+          "top3Share": 0.331610634143805,
+          "minShare": 0.04203123983044474,
+          "skillPowerCorr": 0.47860966200861593,
+          "luckKingRate": 0.56,
+          "medianTerminalUsd": 399305,
+          "p10TerminalUsd": 227588,
+          "p90TerminalUsd": 767420,
+          "meanMaxDrawdown": 0.15250442399049416,
+          "meanCryptoWeight": 0.20696863437715968,
+          "beatIndexRate": 0.43666666666666665
+        },
+        {
+          "label": "decay 0.8/yr",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 402213,
+          "p10TerminalUsd": 227292,
+          "p90TerminalUsd": 767213,
+          "meanMaxDrawdown": 0.15435228344186977,
+          "meanCryptoWeight": 0.20743963031376578,
+          "beatIndexRate": 0.43666666666666665
+        },
+        {
+          "label": "decay 0.7/yr",
+          "top1Share": 0.1530494248265881,
+          "top3Share": 0.39546612604855436,
+          "minShare": 0.05288637747006186,
+          "skillPowerCorr": 0.36728099554510263,
+          "luckKingRate": 0.5066666666666667,
+          "medianTerminalUsd": 398354,
+          "p10TerminalUsd": 229828,
+          "p90TerminalUsd": 775544,
+          "meanMaxDrawdown": 0.1553828541444092,
+          "meanCryptoWeight": 0.2077706922700322,
+          "beatIndexRate": 0.43333333333333335
+        }
+      ]
+    },
+    {
+      "experiment": "floor-cap",
+      "question": "How much floor/cap structure prevents a permanent king? (decay 0.8)",
+      "results": [
+        {
+          "label": "floor 1, no cap",
+          "top1Share": 0.16671255453342232,
+          "top3Share": 0.40982054046335237,
+          "minShare": 0.04514500296701854,
+          "skillPowerCorr": 0.4143324077887412,
+          "luckKingRate": 0.4533333333333333,
+          "medianTerminalUsd": 402854,
+          "p10TerminalUsd": 226981,
+          "p90TerminalUsd": 781731,
+          "meanMaxDrawdown": 0.15621919137122783,
+          "meanCryptoWeight": 0.20746591350180593,
+          "beatIndexRate": 0.44
+        },
+        {
+          "label": "floor 1, cap 3x",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 402213,
+          "p10TerminalUsd": 227292,
+          "p90TerminalUsd": 767213,
+          "meanMaxDrawdown": 0.15435228344186977,
+          "meanCryptoWeight": 0.20743963031376578,
+          "beatIndexRate": 0.43666666666666665
+        },
+        {
+          "label": "floor 1, cap 2x",
+          "top1Share": 0.10391181520021044,
+          "top3Share": 0.3116945352861874,
+          "minShare": 0.05412106599242867,
+          "skillPowerCorr": 0.4090707996147839,
+          "luckKingRate": 0.6066666666666667,
+          "medianTerminalUsd": 401039,
+          "p10TerminalUsd": 231082,
+          "p90TerminalUsd": 768528,
+          "meanMaxDrawdown": 0.15196373702898153,
+          "meanCryptoWeight": 0.20773114101973272,
+          "beatIndexRate": 0.43666666666666665
+        },
+        {
+          "label": "winners rule (tiny floor, no cap)",
+          "top1Share": 0.21997915685013913,
+          "top3Share": 0.5119214841801913,
+          "minShare": 0.020748485735459954,
+          "skillPowerCorr": 0.4143324077887412,
+          "luckKingRate": 0.4533333333333333,
+          "medianTerminalUsd": 399770,
+          "p10TerminalUsd": 221697,
+          "p90TerminalUsd": 794426,
+          "meanMaxDrawdown": 0.16544677611717157,
+          "meanCryptoWeight": 0.2063111726252841,
+          "beatIndexRate": 0.43333333333333335
+        },
+        {
+          "label": "equal vote (no fantasy voice)",
+          "top1Share": 0.08333333333333305,
+          "top3Share": 0.25,
+          "minShare": 0.08333333333333305,
+          "skillPowerCorr": 0,
+          "luckKingRate": 0.7733333333333333,
+          "medianTerminalUsd": 399543,
+          "p10TerminalUsd": 227661,
+          "p90TerminalUsd": 767140,
+          "meanMaxDrawdown": 0.1497129945342897,
+          "meanCryptoWeight": 0.20833333333333426,
+          "beatIndexRate": 0.44
+        }
+      ]
+    },
+    {
+      "experiment": "earn-basis",
+      "question": "What should earn voice: trophies, weekly wins, or a blend? (decay 0.8, cap 3x)",
+      "results": [
+        {
+          "label": "trophies (champ 1.0 / pts 0.5 / po-win 0.25)",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 402213,
+          "p10TerminalUsd": 227292,
+          "p90TerminalUsd": 767213,
+          "meanMaxDrawdown": 0.15435228344186977,
+          "meanCryptoWeight": 0.20743963031376578,
+          "beatIndexRate": 0.43666666666666665
+        },
+        {
+          "label": "wins only (0.04 per reg-season win)",
+          "top1Share": 0.09482032784060156,
+          "top3Share": 0.2749877568768422,
+          "minShare": 0.07242354126398048,
+          "skillPowerCorr": 0.5096736596736597,
+          "luckKingRate": 0.38666666666666666,
+          "medianTerminalUsd": 402426,
+          "p10TerminalUsd": 226532,
+          "p90TerminalUsd": 771868,
+          "meanMaxDrawdown": 0.15058827355589552,
+          "meanCryptoWeight": 0.20849069954085211,
+          "beatIndexRate": 0.44333333333333336
+        },
+        {
+          "label": "blended (half trophies + 0.02/win)",
+          "top1Share": 0.11582866397971699,
+          "top3Share": 0.32322697120636007,
+          "minShare": 0.0624120707002724,
+          "skillPowerCorr": 0.46356681278542994,
+          "luckKingRate": 0.4533333333333333,
+          "medianTerminalUsd": 402431,
+          "p10TerminalUsd": 232945,
+          "p90TerminalUsd": 772916,
+          "meanMaxDrawdown": 0.1518333012172928,
+          "meanCryptoWeight": 0.20798721839270415,
+          "beatIndexRate": 0.43666666666666665
+        }
+      ]
+    },
+    {
+      "experiment": "aggregation",
+      "question": "Committee compromise vs winner-take-all proposals (tuned model)",
+      "results": [
+        {
+          "label": "weighted-average",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 402213,
+          "p10TerminalUsd": 227292,
+          "p90TerminalUsd": 767213,
+          "meanMaxDrawdown": 0.15435228344186977,
+          "meanCryptoWeight": 0.20743963031376578,
+          "beatIndexRate": 0.43666666666666665
+        },
+        {
+          "label": "proposal (winner-take-all)",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 397117,
+          "p10TerminalUsd": 254118,
+          "p90TerminalUsd": 642126,
+          "meanMaxDrawdown": 0.12601054479089357,
+          "meanCryptoWeight": 0.013666666666666662,
+          "beatIndexRate": 0.39
+        },
+        {
+          "label": "proposal + equal vote",
+          "top1Share": 0.08333333333333305,
+          "top3Share": 0.25,
+          "minShare": 0.08333333333333305,
+          "skillPowerCorr": 0,
+          "luckKingRate": 0.7733333333333333,
+          "medianTerminalUsd": 414635,
+          "p10TerminalUsd": 251916,
+          "p90TerminalUsd": 640542,
+          "meanMaxDrawdown": 0.123145971125606,
+          "meanCryptoWeight": 0,
+          "beatIndexRate": 0.38666666666666666
+        }
+      ]
+    },
+    {
+      "experiment": "guardrails",
+      "question": "Does a constitution-level crypto cap protect a 20-year fund?",
+      "results": [
+        {
+          "label": "no cap, weighted-average",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 402213,
+          "p10TerminalUsd": 227292,
+          "p90TerminalUsd": 767213,
+          "meanMaxDrawdown": 0.15435228344186977,
+          "meanCryptoWeight": 0.20743963031376578,
+          "beatIndexRate": 0.43666666666666665
+        },
+        {
+          "label": "crypto <= 25%, weighted-average",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 399845,
+          "p10TerminalUsd": 227292,
+          "p90TerminalUsd": 765171,
+          "meanMaxDrawdown": 0.152131065189089,
+          "meanCryptoWeight": 0.20541634129475725,
+          "beatIndexRate": 0.44
+        },
+        {
+          "label": "crypto <= 10%, weighted-average",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 411583,
+          "p10TerminalUsd": 270284,
+          "p90TerminalUsd": 640684,
+          "meanMaxDrawdown": 0.08687893939616138,
+          "meanCryptoWeight": 0.10000000000000053,
+          "beatIndexRate": 0.4666666666666667
+        },
+        {
+          "label": "no cap, proposal",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 397117,
+          "p10TerminalUsd": 254118,
+          "p90TerminalUsd": 642126,
+          "meanMaxDrawdown": 0.12601054479089357,
+          "meanCryptoWeight": 0.013666666666666662,
+          "beatIndexRate": 0.39
+        },
+        {
+          "label": "crypto <= 25%, proposal",
+          "top1Share": 0.13573889368713674,
+          "top3Share": 0.3827827233309797,
+          "minShare": 0.04727818466586356,
+          "skillPowerCorr": 0.4139014567630603,
+          "luckKingRate": 0.4766666666666667,
+          "medianTerminalUsd": 399636,
+          "p10TerminalUsd": 257792,
+          "p90TerminalUsd": 636913,
+          "meanMaxDrawdown": 0.10983957111824456,
+          "meanCryptoWeight": 0.00545833333333333,
+          "beatIndexRate": 0.4066666666666667
+        }
+      ]
+    }
+  ]
+}

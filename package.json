@@ -17,7 +17,8 @@
     "slice": "tsx apps/slice/src/main.ts",
     "slice:interactive": "tsx apps/slice/src/main.ts --interactive",
     "experiments": "tsx packages/sim/src/experiments/run.ts",
-    "experiments:smoke": "tsx packages/sim/src/experiments/run.ts --seasons 20 --quiet"
+    "experiments:smoke": "tsx packages/sim/src/experiments/run.ts --seasons 20 --quiet",
+    "experiments:dynasty": "tsx packages/sim/src/experiments/dynastyRun.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
