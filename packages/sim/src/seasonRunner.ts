@@ -242,7 +242,7 @@ export function runSeason(cfg: SeasonConfig): SeasonResult {
       if (e.kind === 'BET_PLACED') {
         count++;
         stakedCents += e.stakeCents;
-        stakeByBet.set(e.betId, e.stakeCents);
+        stakeByBet.set(e.betId, (stakeByBet.get(e.betId) ?? 0) + e.stakeCents);
       } else if (e.kind === 'BET_SETTLED') {
         payoutCents += e.payoutCents;
         const kind = offerKind.get(e.betId);

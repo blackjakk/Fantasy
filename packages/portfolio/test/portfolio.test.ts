@@ -94,6 +94,17 @@ describe('Portfolio accounting', () => {
     holder.checkInvariants(market);
   });
 
+  it('rejects operations that would push aggregates past the safe-integer boundary', () => {
+    const market = makeMarket();
+    const p = new Portfolio('whale');
+    p.deposit(1, Number.MAX_SAFE_INTEGER - 5, 'seed');
+    // The next deposit would silently lose cents to IEEE-754 rounding; it must throw
+    // before mutating instead (adversarially verified 2^53 failure mode).
+    expect(() => p.deposit(1, 10, 'overflow')).toThrow(/cash/);
+    expect(p.totalDepositsCents()).toBe(Number.MAX_SAFE_INTEGER - 5);
+    p.checkInvariants(market);
+  });
+
   it('property: random operation sequences never break the ledger', () => {
     for (let trial = 0; trial < 10; trial++) {
       const market = makeMarket(trial + 100);

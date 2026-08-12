@@ -91,3 +91,12 @@ Standard preset: $500 starting bankroll, $1/point, 1.5× win multiplier (loss 1.
 never zero), betting cap 30% of NAV open stakes, listed odds capped at +200, no weekly capital
 cap, Capital Champion by highest NAV at week 14 alongside the traditional Fantasy Champion.
 Rationale and data in DESIGN.md §B/§E. Every change to these numbers re-runs `pnpm experiments`.
+
+## ADR-014 — Aggregates reject unsafe integers before mutating (2026-08-12)
+
+Adversarial verification constructed real (if absurd-scale, ~$90T) sequences where IEEE-754
+addition past 2^53 silently lost cents from cash/deposits while `checkInvariants` replayed the
+same lossy math and passed. Every aggregate mutation (cash, deposits, realized, cost basis,
+position quantity) now asserts the post-mutation value is a safe integer and throws BEFORE
+committing; `buy` also validates the ACTUAL rounded cost against cash, not the requested spend.
+Loud rejection beats silent corruption. **Safety-critical.**

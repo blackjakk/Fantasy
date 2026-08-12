@@ -98,7 +98,6 @@ const lastWeek = new Map<
   { score: number; won: boolean; capital: Cents; opponent: string; oppScore: number }
 >();
 const parlayNet = new Map<string, Cents>(teamIds.map((id) => [id, 0]));
-const stakeByBet = new Map<string, { teamId: string; stake: Cents; kind: string }>();
 const bestWeekScore = new Map<string, number>(teamIds.map((id) => [id, 0]));
 const scoreRng = rng.child('scores');
 const botRng = rng.child('bots');
@@ -347,7 +346,6 @@ function handleCommand(ctx: BotContext, line: string): void {
         );
       }
       p.placeBet(ctx.week, offer, stake, market);
-      stakeByBet.set(offer.id, { teamId: focusId, stake, kind: offer.kind });
       console.log(
         `  ✓ ${fmtUsd(stake)} on ${offer.description} (${americanOdds(offer.decimalOdds)})`,
       );

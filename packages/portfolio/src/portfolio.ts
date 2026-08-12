@@ -1,5 +1,5 @@
 import type { Cents, MicroShares } from '@fc/core';
-import { affordableMicro, assertCents, positionValue, roundToInt } from '@fc/core';
+import { affordableMicro, assertCents, assertMicro, positionValue, roundToInt } from '@fc/core';
 import type { BetOffer, Market } from '@fc/markets';
 import { payoutFor } from '@fc/markets';
 import type { LedgerEntry, Position } from './ledger.js';
@@ -47,8 +47,12 @@ export class Portfolio {
   deposit(week: number, amountCents: Cents, memo: string): void {
     assertCents(amountCents, 'deposit');
     if (amountCents < 0) throw new Error('deposit must be non-negative');
-    this.cash += amountCents;
-    this.deposits += amountCents;
+    // Reject-before-mutate: aggregates must stay exact safe integers. IEEE-754
+    // additions past 2^53 silently lose cents, so any operation that would push
+    // an aggregate over the boundary throws instead of corrupting the ledger
+    // (adversarially verified failure mode; unreachable at game scale).
+    this.cash = assertCents(this.cash + amountCents, 'cash');
+    this.deposits = assertCents(this.deposits + amountCents, 'deposits');
     this.ledger.push({ kind: 'DEPOSIT', week, amountCents, memo });
   }
 
@@ -71,11 +75,20 @@ export class Portfolio {
     const qtyMicro = affordableMicro(spendCents, priceCents);
     if (qtyMicro <= 0) throw new Error(`spend ${spendCents} buys zero quantity of ${assetId}`);
     const costCents = positionValue(qtyMicro, priceCents);
+    // Check ACTUAL cost against cash: at extreme magnitudes float rounding can
+    // make costCents exceed spendCents by a cent, and cash must never go negative.
+    if (costCents > this.cash) {
+      throw new Error(
+        `insufficient funds: cost ${costCents} > cash ${this.cash} (${this.ownerId})`,
+      );
+    }
+    const pos = this.positions.get(assetId) ?? { assetId, qtyMicro: 0, costBasisCents: 0 };
+    const newQty = assertMicro(pos.qtyMicro + qtyMicro, 'position quantity');
+    const newBasis = assertCents(pos.costBasisCents + costCents, 'cost basis');
     market.applyFlow(assetId, costCents);
     this.cash -= costCents;
-    const pos = this.positions.get(assetId) ?? { assetId, qtyMicro: 0, costBasisCents: 0 };
-    pos.qtyMicro += qtyMicro;
-    pos.costBasisCents += costCents;
+    pos.qtyMicro = newQty;
+    pos.costBasisCents = newBasis;
     this.positions.set(assetId, pos);
     this.ledger.push({
       kind: 'TRADE',
@@ -112,8 +125,8 @@ export class Portfolio {
     pos.qtyMicro -= qtyMicro;
     pos.costBasisCents -= costRemoved;
     if (pos.qtyMicro === 0) this.positions.delete(assetId);
-    this.cash += proceedsCents;
-    this.realized += proceedsCents - costRemoved;
+    this.cash = assertCents(this.cash + proceedsCents, 'cash');
+    this.realized = assertCents(this.realized + proceedsCents - costRemoved, 'realized');
     this.ledger.push({
       kind: 'TRADE',
       week,
@@ -133,8 +146,8 @@ export class Portfolio {
     if (!pos || pos.qtyMicro <= 0) return 0;
     const amountCents = positionValue(pos.qtyMicro, perShareCents);
     if (amountCents <= 0) return 0;
-    this.cash += amountCents;
-    this.realized += amountCents;
+    this.cash = assertCents(this.cash + amountCents, 'cash');
+    this.realized = assertCents(this.realized + amountCents, 'realized');
     this.ledger.push({ kind: 'DIVIDEND', week, assetId, amountCents });
     return amountCents;
   }
@@ -176,8 +189,8 @@ export class Portfolio {
     if (!bet) throw new Error(`no open bet ${betId} (double settlement?)`);
     this.openBets.delete(betId);
     const payoutCents = payoutFor(bet.stakeCents, bet.offer, won);
-    this.cash += payoutCents;
-    this.realized += payoutCents - bet.stakeCents;
+    this.cash = assertCents(this.cash + payoutCents, 'cash');
+    this.realized = assertCents(this.realized + payoutCents - bet.stakeCents, 'realized');
     this.ledger.push({ kind: 'BET_SETTLED', week, betId, payoutCents, won });
     return payoutCents;
   }
@@ -263,7 +276,13 @@ export class Portfolio {
    */
   checkInvariants(market: Market): void {
     if (this.cash < 0) throw new Error(`negative cash: ${this.cash}`);
-    if (!Number.isSafeInteger(this.cash)) throw new Error('cash not integer');
+    assertCents(this.cash, 'cash');
+    assertCents(this.deposits, 'deposits');
+    assertCents(this.realized, 'realized');
+    for (const p of this.positions.values()) {
+      assertMicro(p.qtyMicro, `position ${p.assetId} quantity`);
+      assertCents(p.costBasisCents, `position ${p.assetId} cost basis`);
+    }
     const identity = this.deposits + this.realized + this.unrealizedPnlCents(market);
     const nav = this.navCents(market);
     if (identity !== nav) {
