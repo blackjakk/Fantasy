@@ -102,6 +102,7 @@ const stakeByBet = new Map<string, { teamId: string; stake: Cents; kind: string 
 const bestWeekScore = new Map<string, number>(teamIds.map((id) => [id, 0]));
 const scoreRng = rng.child('scores');
 const botRng = rng.child('bots');
+let stdinExhausted = false;
 
 // ---------- game ----------
 
@@ -257,13 +258,23 @@ function tryBuy(ctx: BotContext, assetId: string, spend: Cents): void {
 // ---------- focus manager: interactive turn ----------
 
 async function interactiveTurn(ctx: BotContext): Promise<void> {
+  if (stdinExhausted) {
+    scriptedFocusTurn(ctx); // input ended (EOF/pipe): autopilot the remaining weeks
+    return;
+  }
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   console.log(rule(`WEEK ${ctx.week} — YOUR MOVE`));
   console.log(
     `Commands: p(ortfolio) · m(arket) · o(ffers) · buy SYM $X · sell SYM · bet N $X · done`,
   );
+  const eof = new Promise<null>((resolve) => rl.once('close', () => resolve(null)));
   for (;;) {
-    const line = (await rl.question('> ')).trim();
+    const answer = await Promise.race([rl.question('> '), eof]);
+    if (answer === null) {
+      stdinExhausted = true;
+      break;
+    }
+    const line = answer.trim();
     if (line === '' || line === 'done' || line === 'd') break;
     try {
       handleCommand(ctx, line);
